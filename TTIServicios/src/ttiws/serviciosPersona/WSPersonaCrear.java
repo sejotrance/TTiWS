@@ -4,17 +4,20 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import org.apache.tomcat.jni.Status;
+
+import ttiws.entidades.StatusResult;
 import ttiws.model.DepartamentoModel;
 import ttiws.model.PersonaHasPersonaModelPK;
 import ttiws.model.PersonaHasRolModel;
 import ttiws.model.PersonaModel;
 
 public class WSPersonaCrear implements Serializable{
-	private PersonaModel personaModel;
 	private static final String PERSISTENCE_UNIT_NAME = "TTIServicios";
 	private static EntityManagerFactory factory;
 	
-	public String crearPersona(	String tipoPersona, 
+	public StatusResult crearPersona(	String tipoPersona, 
 								String username,
 								String password,
 								String email,
@@ -26,7 +29,6 @@ public class WSPersonaCrear implements Serializable{
 								String telefono,
 								String codCarrera,
 								int idDepartamento){
-		String mensaje = "El servicio ha finalizado exitosamente";
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	    EntityManager em = factory.createEntityManager();
 	    em.getTransaction().begin();
@@ -35,6 +37,7 @@ public class WSPersonaCrear implements Serializable{
 	    DepartamentoModel departamento = new DepartamentoModel();
 	    PersonaHasRolModel rol = new PersonaHasRolModel();
 	    PersonaHasPersonaModelPK idRol = new PersonaHasPersonaModelPK();
+	    StatusResult status = new StatusResult(0, "Persona creada exitosamente");
 	    try {
 			persona.setPer_Usuario(username);
 			persona.setPer_Password(password);
@@ -50,10 +53,12 @@ public class WSPersonaCrear implements Serializable{
 			persona.setDepartamento(departamento);
 			em.persist(persona);
 			em.getTransaction().commit();
+			em.close();
 		} catch (Exception e) {
-			mensaje = e.getMessage();
+			status.setMessage(e.getMessage());
+			status.setCode(1);
 		}
-	    System.out.println(mensaje);
-	   return mensaje;
+	    System.out.println("[WS-" + this.getClass().getName() + "]: " + status.getMessage());
+	   return status;
 	}
 }
