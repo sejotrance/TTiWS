@@ -1,6 +1,8 @@
 package ttiws.serviciosPersona;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -58,7 +60,7 @@ public class WSPersonaCrear implements Serializable{
 			status.setMessage(e.getMessage());
 			status.setCode(1);
 		}
-	    System.out.println("[WS-" + this.getClass().getName() + "]: " + status.getMessage());
+	    System.out.println("[WS-" + this.getClass().getName() + "]: " + new Timestamp(System.currentTimeMillis()) + status.getMessage());
 	   return status;
 	}
 }
