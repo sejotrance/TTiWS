@@ -9,7 +9,7 @@ public class Persona {
 
 	private String password;
 	
-	private String anoIngresoAlu;
+	private String nombre;
 
 	private String apellidoMaterno;
 
@@ -19,13 +19,11 @@ public class Persona {
 
 	private String email;
 
-	private String nombre;
-
 	private String notas;
 
 	private String telefonoCelular;
 	
 	private String idDepartamento;
 	
-	private String nombreDepartamento;
+	private String anoIngresoAlu;
 }

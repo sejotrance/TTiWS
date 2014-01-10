@@ -12,18 +12,21 @@ public class PersonaHasRolModelPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	private String per_Rol_Id;
+	@Column(unique=true, nullable=false)
+	private int per_Rol_Id;
 
+	@Column(unique=true, nullable=false)
 	private int persona_Per_Id;
 
+	@Column(unique=true, nullable=false)
 	private int rol_Rol_Id;
 
 	public PersonaHasRolModelPK() {
 	}
-	public String getPer_Rol_Id() {
+	public int getPer_Rol_Id() {
 		return this.per_Rol_Id;
 	}
-	public void setPer_Rol_Id(String per_Rol_Id) {
+	public void setPer_Rol_Id(int per_Rol_Id) {
 		this.per_Rol_Id = per_Rol_Id;
 	}
 	public int getPersona_Per_Id() {
@@ -48,7 +51,7 @@ public class PersonaHasRolModelPK implements Serializable {
 		}
 		PersonaHasRolModelPK castOther = (PersonaHasRolModelPK)other;
 		return 
-			this.per_Rol_Id.equals(castOther.per_Rol_Id)
+			(this.per_Rol_Id == castOther.per_Rol_Id)
 			&& (this.persona_Per_Id == castOther.persona_Per_Id)
 			&& (this.rol_Rol_Id == castOther.rol_Rol_Id);
 	}
@@ -56,7 +59,7 @@ public class PersonaHasRolModelPK implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.per_Rol_Id.hashCode();
+		hash = hash * prime + this.per_Rol_Id;
 		hash = hash * prime + this.persona_Per_Id;
 		hash = hash * prime + this.rol_Rol_Id;
 		

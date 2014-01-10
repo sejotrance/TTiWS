@@ -15,32 +15,53 @@ public class PersonaModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false)
 	private int per_Id;
 
+	@Column(length=45)
 	private String per_Ano_IngresoAlu;
 
+	@Column(nullable=false, length=45)
 	private String per_Apellido_Materno;
 
+	@Column(nullable=false, length=45)
 	private String per_Apellido_Paterno;
 
+	@Column(length=256)
 	private String per_Dirección;
 
+	@Column(nullable=false, length=45)
 	private String per_Email;
 
+	@Column(nullable=false, length=45)
 	private String per_Nombre;
 
+	@Column(length=1024)
 	private String per_Notas;
 
+	@Column(nullable=false, length=64)
 	private String per_Password;
 
+	@Column(nullable=false, length=45)
 	private String per_Run;
 
+	@Column(nullable=false, length=45)
 	private String per_Telefono_Celular;
 
+	@Column(nullable=false, length=45)
 	private String per_Usuario;
 
+	//bi-directional many-to-one association to ArchivoModel
+	@OneToMany(mappedBy="persona")
+	private List<ArchivoModel> archivos;
+
+	//bi-directional many-to-one association to CalificacionModel
+	@OneToMany(mappedBy="persona")
+	private List<CalificacionModel> calificacions;
+
 	//bi-directional many-to-one association to DepartamentoModel
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Departamento_Dep_Id", nullable=false)
 	private DepartamentoModel departamento;
 
 	//bi-directional many-to-one association to PersonaHasCarreraModel
@@ -63,17 +84,65 @@ public class PersonaModel implements Serializable {
 	@OneToMany(mappedBy="persona")
 	private List<PersonaHasTtituloModel> personaHasTtitulos;
 
-	//bi-directional many-to-one association to ArchivoModel
-	@OneToMany(mappedBy="persona")
-	private List<ArchivoModel> archivos;
-
-	//bi-directional many-to-one association to CalificacionModel
-	@OneToMany(mappedBy="persona")
-	private List<CalificacionModel> calificacions;
-
 	//bi-directional many-to-one association to ReunionModel
 	@OneToMany(mappedBy="persona")
 	private List<ReunionModel> reunions;
+
+	//bi-directional many-to-many association to CarreraModel
+	@ManyToMany
+	@JoinTable(
+		name="persona_has_carrera"
+		, joinColumns={
+			@JoinColumn(name="Persona_Per_Id", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Carrera_Car_Id", nullable=false)
+			}
+		)
+	private List<CarreraModel> carreras;
+
+	//bi-directional many-to-many association to PersonaModel
+	@ManyToMany
+	@JoinTable(
+		name="persona_has_persona"
+		, joinColumns={
+			@JoinColumn(name="Persona_Per_Id", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Persona_Per_Id1", nullable=false)
+			}
+		)
+	private List<PersonaModel> personas1;
+
+	//bi-directional many-to-many association to PersonaModel
+	@ManyToMany(mappedBy="personas1")
+	private List<PersonaModel> personas2;
+
+	//bi-directional many-to-many association to RolModel
+	@ManyToMany
+	@JoinTable(
+		name="persona_has_rol"
+		, joinColumns={
+			@JoinColumn(name="Persona_Per_Id", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Rol_Rol_Id", nullable=false)
+			}
+		)
+	private List<RolModel> rols;
+
+	//bi-directional many-to-many association to TtituloModel
+	@ManyToMany
+	@JoinTable(
+		name="persona_has_ttitulo"
+		, joinColumns={
+			@JoinColumn(name="Persona_Per_Id", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="TTitulo_TTi_Id", nullable=false)
+			}
+		)
+	private List<TtituloModel> ttitulos;
 
 	public PersonaModel() {
 	}
@@ -172,6 +241,50 @@ public class PersonaModel implements Serializable {
 
 	public void setPer_Usuario(String per_Usuario) {
 		this.per_Usuario = per_Usuario;
+	}
+
+	public List<ArchivoModel> getArchivos() {
+		return this.archivos;
+	}
+
+	public void setArchivos(List<ArchivoModel> archivos) {
+		this.archivos = archivos;
+	}
+
+	public ArchivoModel addArchivo(ArchivoModel archivo) {
+		getArchivos().add(archivo);
+		archivo.setPersona(this);
+
+		return archivo;
+	}
+
+	public ArchivoModel removeArchivo(ArchivoModel archivo) {
+		getArchivos().remove(archivo);
+		archivo.setPersona(null);
+
+		return archivo;
+	}
+
+	public List<CalificacionModel> getCalificacions() {
+		return this.calificacions;
+	}
+
+	public void setCalificacions(List<CalificacionModel> calificacions) {
+		this.calificacions = calificacions;
+	}
+
+	public CalificacionModel addCalificacion(CalificacionModel calificacion) {
+		getCalificacions().add(calificacion);
+		calificacion.setPersona(this);
+
+		return calificacion;
+	}
+
+	public CalificacionModel removeCalificacion(CalificacionModel calificacion) {
+		getCalificacions().remove(calificacion);
+		calificacion.setPersona(null);
+
+		return calificacion;
 	}
 
 	public DepartamentoModel getDepartamento() {
@@ -292,50 +405,6 @@ public class PersonaModel implements Serializable {
 		return personaHasTtitulo;
 	}
 
-	public List<ArchivoModel> getArchivos() {
-		return this.archivos;
-	}
-
-	public void setArchivos(List<ArchivoModel> archivos) {
-		this.archivos = archivos;
-	}
-
-	public ArchivoModel addArchivo(ArchivoModel archivo) {
-		getArchivos().add(archivo);
-		archivo.setPersona(this);
-
-		return archivo;
-	}
-
-	public ArchivoModel removeArchivo(ArchivoModel archivo) {
-		getArchivos().remove(archivo);
-		archivo.setPersona(null);
-
-		return archivo;
-	}
-
-	public List<CalificacionModel> getCalificacions() {
-		return this.calificacions;
-	}
-
-	public void setCalificacions(List<CalificacionModel> calificacions) {
-		this.calificacions = calificacions;
-	}
-
-	public CalificacionModel addCalificacion(CalificacionModel calificacion) {
-		getCalificacions().add(calificacion);
-		calificacion.setPersona(this);
-
-		return calificacion;
-	}
-
-	public CalificacionModel removeCalificacion(CalificacionModel calificacion) {
-		getCalificacions().remove(calificacion);
-		calificacion.setPersona(null);
-
-		return calificacion;
-	}
-
 	public List<ReunionModel> getReunions() {
 		return this.reunions;
 	}
@@ -356,6 +425,46 @@ public class PersonaModel implements Serializable {
 		reunion.setPersona(null);
 
 		return reunion;
+	}
+
+	public List<CarreraModel> getCarreras() {
+		return this.carreras;
+	}
+
+	public void setCarreras(List<CarreraModel> carreras) {
+		this.carreras = carreras;
+	}
+
+	public List<PersonaModel> getPersonas1() {
+		return this.personas1;
+	}
+
+	public void setPersonas1(List<PersonaModel> personas1) {
+		this.personas1 = personas1;
+	}
+
+	public List<PersonaModel> getPersonas2() {
+		return this.personas2;
+	}
+
+	public void setPersonas2(List<PersonaModel> personas2) {
+		this.personas2 = personas2;
+	}
+
+	public List<RolModel> getRols() {
+		return this.rols;
+	}
+
+	public void setRols(List<RolModel> rols) {
+		this.rols = rols;
+	}
+
+	public List<TtituloModel> getTtitulos() {
+		return this.ttitulos;
+	}
+
+	public void setTtitulos(List<TtituloModel> ttitulos) {
+		this.ttitulos = ttitulos;
 	}
 
 }

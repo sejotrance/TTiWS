@@ -15,21 +15,28 @@ public class CalificacionModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false)
 	private int cal_Id;
 
+	@Column(nullable=false, length=45)
 	private String cal_Calificacion;
 
+	@Column(length=1024)
 	private String cal_Descripcion;
 
-	private byte cal_Es_Informe;
+	@Column(nullable=false)
+	private boolean cal_Es_Informe;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	private Date cal_Fecha;
 
+	@Column(nullable=false, length=45)
 	private String cal_Porcentaje;
 
 	//bi-directional many-to-one association to PersonaModel
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Persona_Per_Id", nullable=false)
 	private PersonaModel persona;
 
 	public CalificacionModel() {
@@ -59,11 +66,11 @@ public class CalificacionModel implements Serializable {
 		this.cal_Descripcion = cal_Descripcion;
 	}
 
-	public byte getCal_Es_Informe() {
+	public boolean getCal_Es_Informe() {
 		return this.cal_Es_Informe;
 	}
 
-	public void setCal_Es_Informe(byte cal_Es_Informe) {
+	public void setCal_Es_Informe(boolean cal_Es_Informe) {
 		this.cal_Es_Informe = cal_Es_Informe;
 	}
 

@@ -16,24 +16,32 @@ public class TtituloModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false)
 	private int TTi_Id;
 
+	@Column(length=1024)
 	private String TTi_Descripcion;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date TTi_Fecha_Inscripcion;
 
+	@Column(nullable=false, length=256)
 	private String TTi_Nombre;
 
+	@Column(nullable=false, length=256)
 	private String TTi_Tema;
 
-	private byte TTi_Tit1;
+	private boolean TTi_Tit1;
 
-	private byte TTi_Tit2;
+	private boolean TTi_Tit2;
 
 	//bi-directional many-to-one association to PersonaHasTtituloModel
 	@OneToMany(mappedBy="ttitulo")
 	private List<PersonaHasTtituloModel> personaHasTtitulos;
+
+	//bi-directional many-to-many association to PersonaModel
+	@ManyToMany(mappedBy="ttitulos")
+	private List<PersonaModel> personas;
 
 	public TtituloModel() {
 	}
@@ -78,19 +86,19 @@ public class TtituloModel implements Serializable {
 		this.TTi_Tema = TTi_Tema;
 	}
 
-	public byte getTTi_Tit1() {
+	public boolean getTTi_Tit1() {
 		return this.TTi_Tit1;
 	}
 
-	public void setTTi_Tit1(byte TTi_Tit1) {
+	public void setTTi_Tit1(boolean TTi_Tit1) {
 		this.TTi_Tit1 = TTi_Tit1;
 	}
 
-	public byte getTTi_Tit2() {
+	public boolean getTTi_Tit2() {
 		return this.TTi_Tit2;
 	}
 
-	public void setTTi_Tit2(byte TTi_Tit2) {
+	public void setTTi_Tit2(boolean TTi_Tit2) {
 		this.TTi_Tit2 = TTi_Tit2;
 	}
 
@@ -114,6 +122,14 @@ public class TtituloModel implements Serializable {
 		personaHasTtitulo.setTtitulo(null);
 
 		return personaHasTtitulo;
+	}
+
+	public List<PersonaModel> getPersonas() {
+		return this.personas;
+	}
+
+	public void setPersonas(List<PersonaModel> personas) {
+		this.personas = personas;
 	}
 
 }

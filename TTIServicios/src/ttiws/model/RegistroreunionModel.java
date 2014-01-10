@@ -14,15 +14,18 @@ public class RegistroreunionModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false)
 	private int RReu_Id;
 
+	@Column(length=1024)
 	private String RReu_Registro_AcuyCom;
 
+	@Column(length=1024)
 	private String RReu_Registro_Avances;
 
 	//bi-directional many-to-one association to ReunionModel
-	@ManyToOne
-	@JoinColumn(name="Reunión_Reu_Id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Reunión_Reu_Id", nullable=false)
 	private ReunionModel reunion;
 
 	public RegistroreunionModel() {

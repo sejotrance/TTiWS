@@ -17,23 +17,26 @@ public class PersonaHasTtituloModel implements Serializable {
 	@EmbeddedId
 	private PersonaHasTtituloModelPK id;
 
+	@Column(length=45)
 	private String per_TTi_Atributo_Mod;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date per_TTi_Fecha_Mod;
 
+	@Column(length=45)
 	private String per_TTi_Valor_Anterior;
 
+	@Column(length=45)
 	private String per_TTi_Valor_Nuevo;
 
 	//bi-directional many-to-one association to PersonaModel
-	@ManyToOne
-	@JoinColumn(name = "Persona_Per_Id", referencedColumnName = "Per_Id", insertable=false, updatable=false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Persona_Per_Id", nullable=false, insertable=false, updatable=false)
 	private PersonaModel persona;
 
 	//bi-directional many-to-one association to TtituloModel
-	@ManyToOne
-	@JoinColumn(name = "TTitulo_TTi_Id", referencedColumnName = "TTi_Id", insertable=false, updatable=false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="TTitulo_TTi_Id", nullable=false, insertable=false, updatable=false)
 	private TtituloModel ttitulo;
 
 	public PersonaHasTtituloModel() {

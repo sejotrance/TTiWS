@@ -15,19 +15,25 @@ public class ArchivoModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false)
 	private int arch_Id;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	private Date arch_Fecha;
 
+	@Column(nullable=false, length=45)
 	private String arch_Nombre;
 
+	@Column(nullable=false, length=1024)
 	private String arch_Path;
 
+	@Column(length=45)
 	private String arch_Tipo;
 
 	//bi-directional many-to-one association to PersonaModel
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Persona_Per_Id", nullable=false)
 	private PersonaModel persona;
 
 	public ArchivoModel() {

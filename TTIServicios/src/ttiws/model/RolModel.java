@@ -15,13 +15,19 @@ public class RolModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false)
 	private int rol_Id;
 
+	@Column(nullable=false, length=45)
 	private String rol_Nombre;
 
 	//bi-directional many-to-one association to PersonaHasRolModel
 	@OneToMany(mappedBy="rol")
 	private List<PersonaHasRolModel> personaHasRols;
+
+	//bi-directional many-to-many association to PersonaModel
+	@ManyToMany(mappedBy="rols")
+	private List<PersonaModel> personas;
 
 	public RolModel() {
 	}
@@ -62,6 +68,14 @@ public class RolModel implements Serializable {
 		personaHasRol.setRol(null);
 
 		return personaHasRol;
+	}
+
+	public List<PersonaModel> getPersonas() {
+		return this.personas;
+	}
+
+	public void setPersonas(List<PersonaModel> personas) {
+		this.personas = personas;
 	}
 
 }

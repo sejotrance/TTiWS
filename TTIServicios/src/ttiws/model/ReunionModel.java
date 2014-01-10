@@ -16,18 +16,24 @@ public class ReunionModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(unique=true, nullable=false)
 	private int reu_Id;
 
+	@Column(nullable=false, length=45)
 	private String reu_Asunto;
 
+	@Column(length=1024)
 	private String reu_Descripcion;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	private Date reu_Fecha_Desde;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	private Date reu_Fecha_Hasta;
 
+	@Column(length=45)
 	private String reu_Style;
 
 	//bi-directional many-to-one association to RegistroreunionModel
@@ -35,7 +41,8 @@ public class ReunionModel implements Serializable {
 	private List<RegistroreunionModel> registroreunions;
 
 	//bi-directional many-to-one association to PersonaModel
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Persona_Per_Id", nullable=false)
 	private PersonaModel persona;
 
 	public ReunionModel() {

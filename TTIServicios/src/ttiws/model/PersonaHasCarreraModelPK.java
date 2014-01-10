@@ -12,10 +12,13 @@ public class PersonaHasCarreraModelPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
+	@Column(unique=true, nullable=false)
 	private int persona_Per_Id;
 
+	@Column(unique=true, nullable=false)
 	private int carrera_Car_Id;
 
+	@Column(unique=true, nullable=false)
 	private int per_Car_Id;
 
 	public PersonaHasCarreraModelPK() {

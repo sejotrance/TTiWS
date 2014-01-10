@@ -2,7 +2,6 @@ package ttiws.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
 
 
@@ -18,23 +17,26 @@ public class PersonaHasPersonaModel implements Serializable {
 	@EmbeddedId
 	private PersonaHasPersonaModelPK id;
 
+	@Column(length=45)
 	private String per_Per_Atributo_Mod;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date per_Per_Fecha_Mod;
 
+	@Column(length=45)
 	private String per_Per_Valor_Anterior;
 
+	@Column(length=45)
 	private String per_Per_Valor_Nuevo;
 
 	//bi-directional many-to-one association to PersonaModel
-	@ManyToOne
-	@JoinColumn(name = "Persona_Per_Id", referencedColumnName = "Per_Id", insertable=false, updatable=false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Persona_Per_Id", nullable=false, insertable=false, updatable=false)
 	private PersonaModel persona1;
 
 	//bi-directional many-to-one association to PersonaModel
-	@ManyToOne
-	@JoinColumn(name = "Persona_Per_Id1", referencedColumnName = "Per_Id", insertable=false, updatable=false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Persona_Per_Id1", nullable=false, insertable=false, updatable=false)
 	private PersonaModel persona2;
 
 	public PersonaHasPersonaModel() {

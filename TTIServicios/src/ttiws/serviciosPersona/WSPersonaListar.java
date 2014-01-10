@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import ttiws.entidades.Persona;
 import ttiws.model.PersonaModel;
@@ -16,22 +17,23 @@ public class WSPersonaListar {
 	private static final String PERSISTENCE_UNIT_NAME = "TTIServicios";
 	private static EntityManagerFactory factory;
 	
-	public List<Persona> listarPersonas(boolean esVigente, String codTipoPersona){
+	public List<PersonaModel> listarPersonas(String codTipoPersona){
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	    EntityManager em = factory.createEntityManager();
-	    // read the existing entries and write to console
-	    String queryString = "SELECT p FROM PersonaModel p";
-	    Query q = em.createQuery(queryString);
+	    // ARMAR QUERY SEGUN PARAMETROS INGRESADOS
+	    String queryString = "SELECT p FROM PersonaModel p ";
+	    if(codTipoPersona != null && codTipoPersona != ""){
+	    	queryString += ("JOIN p.personaHasRols hr join hr.rol r  WHERE r.rol_Id="+codTipoPersona);
+	    }
+	    // FIN ARMAR QUERY
+	    TypedQuery<PersonaModel> q = em.createQuery(queryString, PersonaModel.class);
+//	    if(codTipoPersona != null && codTipoPersona != ""){
+//	    	q.setParameter("codTipoPersona", codTipoPersona);
+//	    }
 	    //q.setParameter("username", username);
 	    List<PersonaModel> personaList = q.getResultList();
-	    ArrayList<Persona> listaPersonas = new ArrayList<Persona>();
-	    for (PersonaModel persona : personaList) {
-	    	Persona e = new Persona();
-	      listaPersonas.add(e);
-	    }
 	    em.close();
 	    System.out.println("[WS-" + this.getClass().getName() + "]: " + new Timestamp(System.currentTimeMillis()) + " Ha finalizado exitosamente" );
-		return listaPersonas;
-		
+		return personaList;
 	}
 }

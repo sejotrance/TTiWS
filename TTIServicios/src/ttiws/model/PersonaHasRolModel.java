@@ -2,7 +2,6 @@ package ttiws.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
 
 
@@ -18,19 +17,20 @@ public class PersonaHasRolModel implements Serializable {
 	@EmbeddedId
 	private PersonaHasRolModelPK id;
 
-	private byte per_Rol_Es_Vigente;
+	@Column(nullable=false)
+	private boolean per_Rol_Es_Vigente;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date per_Rol_Fecha_Mod;
 
 	//bi-directional many-to-one association to PersonaModel
-	@ManyToOne
-	@JoinColumn(name = "Persona_Per_Id", referencedColumnName = "Per_Id", insertable=false, updatable=false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Persona_Per_Id", nullable=false, insertable=false, updatable=false)
 	private PersonaModel persona;
 
 	//bi-directional many-to-one association to RolModel
-	@ManyToOne
-	@JoinColumn(name = "Rol_Rol_Id", referencedColumnName = "Rol_Id", insertable=false, updatable=false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Rol_Rol_Id", nullable=false, insertable=false, updatable=false)
 	private RolModel rol;
 
 	public PersonaHasRolModel() {
@@ -44,11 +44,11 @@ public class PersonaHasRolModel implements Serializable {
 		this.id = id;
 	}
 
-	public byte getPer_Rol_Es_Vigente() {
+	public boolean getPer_Rol_Es_Vigente() {
 		return this.per_Rol_Es_Vigente;
 	}
 
-	public void setPer_Rol_Es_Vigente(byte per_Rol_Es_Vigente) {
+	public void setPer_Rol_Es_Vigente(boolean per_Rol_Es_Vigente) {
 		this.per_Rol_Es_Vigente = per_Rol_Es_Vigente;
 	}
 
