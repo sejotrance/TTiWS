@@ -8,54 +8,51 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import ttiws.entidades.StatusResult;
-import ttiws.model.PersonaHasPersonaModel;
-import ttiws.model.PersonaHasPersonaModelPK;
-import ttiws.model.PersonaHasRolModel;
+import ttiws.model.CarreraModel;
+import ttiws.model.PersonaHasCarreraModel;
+import ttiws.model.PersonaHasCarreraModelPK;
 import ttiws.model.PersonaModel;
+import ttiws.serviciosCarrera.WSCarreraConsultar;
 import ttiws.serviciosPersona.WSPersonaConsultar;
 
-public class WSAlumnoProfesorAgregar{
+public class WSAlumnoCarreraAgregar {
 	private static final String PERSISTENCE_UNIT_NAME = "TTIServicios";
 	private static EntityManagerFactory factory;
-	private PersonaModel alumno;
-	private PersonaModel profesor;
-	public StatusResult agregarProfesor(int idAlumno, int idProfesor){
-		
+	
+	public static StatusResult agregarCarrera(int idAlumno, int idCarrera){
+		PersonaModel alumno;
+		CarreraModel carrera;
 		if(idAlumno != 0){
 			alumno = WSPersonaConsultar.consultarPorId(idAlumno);
 			if(alumno == null) return new StatusResult(1, "Alumno no existe");
 		}else{
 			return new StatusResult(1, "Debe ingresar idAlumno");
 		}
-		if(idProfesor != 0){
-			profesor = WSPersonaConsultar.consultarPorId(idProfesor);
-			if(profesor == null) return new StatusResult(1, "Profesor no existe");
+		if(idCarrera != 0){
+			carrera = WSCarreraConsultar.consultarPorId(idCarrera);
+			if(carrera == null) return new StatusResult(1, "Carrera no existe");
 		}else{
-			return new StatusResult(1, "Debe ingresar idProfesor");
+			return new StatusResult(1, "Debe ingresar idCarrera");
 		}
 		//COMIENZA TRANSACCION
 		try{
-			PersonaHasPersonaModel personaHP= new PersonaHasPersonaModel();
-			PersonaHasPersonaModelPK pk = new PersonaHasPersonaModelPK();
+			PersonaHasCarreraModel personaHC= new PersonaHasCarreraModel();
+			PersonaHasCarreraModelPK pk = new PersonaHasCarreraModelPK();
 			pk.setPersona_Per_Id(alumno.getPer_Id());
-			pk.setPersona_Per_Id1(profesor.getPer_Id());
-			personaHP.setId(pk);
-			personaHP.setPer_Per_Fecha_Mod(new Date());
-			personaHP.setPersona1(alumno);
-			personaHP.setPersona2(profesor);
+			pk.setCarrera_Car_Id(carrera.getCar_Id());
+			personaHC.setId(pk);
+			personaHC.setPer_Car_Fecha_Mod(new Date());
 			factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		    EntityManager em = factory.createEntityManager();
 		    em.getTransaction().begin();
-		    em.persist(personaHP);
+		    em.persist(personaHC);
 		    em.getTransaction().commit();
 		    em.close();
 	    } catch (Exception e) {
-	    	System.out.println("[WS-" + this.getClass().getName() + "]: " + new Timestamp(System.currentTimeMillis()) + e.getMessage());
+	    	System.out.println("[WS-" + "WSAlumnoCarreraAgregar.agregarCarrera" + "]: " + new Timestamp(System.currentTimeMillis()) + e.getMessage());
 			return new StatusResult(1, e.getMessage());
 		}
-		System.out.println("[WS-" + this.getClass().getName() + "]: " + new Timestamp(System.currentTimeMillis()) + " Ha finalizado exitosamente");
+		System.out.println("[WS-" + "WSAlumnoCarreraAgregar.agregarCarrera" + "]: " + new Timestamp(System.currentTimeMillis()) + " Ha finalizado exitosamente");
 		   return new StatusResult(0, "Servicio finalizado exitosamente");
 	}
-	
-
 }

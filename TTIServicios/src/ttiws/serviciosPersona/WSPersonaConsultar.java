@@ -20,22 +20,22 @@ public class WSPersonaConsultar {
 			factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		    EntityManager em = factory.createEntityManager();
 		    // ARMAR QUERY SEGUN PARAMETROS INGRESADOS
-		    String queryString = "SELECT p FROM PersonaModel p WHERE p.per_Usuario = :run";
+		    String queryString = "SELECT p FROM PersonaModel p WHERE p.per_Run = :run";
 		    // FIN ARMAR QUERY
 		    Query q = em.createQuery(queryString, PersonaModel.class);
 		    q.setParameter("run", run);
 
 		    PersonaModel persona = (PersonaModel) q.getSingleResult();
 		    em.close();
-		    System.out.println("[WS-" + "WSPersonaConsultar" + "]: " + new Timestamp(System.currentTimeMillis()) + " Ha finalizado exitosamente" );
+		    System.out.println("[WS-" + "WSPersonaConsultar.consultarPorRun" + "]: " + new Timestamp(System.currentTimeMillis()) + " Ha finalizado exitosamente" );
 			return persona;
 		}else{
 			return null;
 		}
 	}
 	
-	public static PersonaModel consultarPorId(String id){
-		if(id != null & id != ""){
+	public static PersonaModel consultarPorId(int id){
+		if(id != 0){
 			factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		    EntityManager em = factory.createEntityManager();
 		    // ARMAR QUERY SEGUN PARAMETROS INGRESADOS
@@ -46,7 +46,7 @@ public class WSPersonaConsultar {
 
 		    PersonaModel persona = (PersonaModel) q.getSingleResult();
 		    em.close();
-		    System.out.println("[WS-" + "WSPersonaConsultar" + "]: " + new Timestamp(System.currentTimeMillis()) + " Ha finalizado exitosamente" );
+		    System.out.println("[WS-" + "WSPersonaConsultar.consultarPorId" + "]: " + new Timestamp(System.currentTimeMillis()) + " Ha finalizado exitosamente" );
 			return persona;
 		}else{
 			return null;

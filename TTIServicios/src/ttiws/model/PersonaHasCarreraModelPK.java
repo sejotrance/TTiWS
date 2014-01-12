@@ -18,9 +18,6 @@ public class PersonaHasCarreraModelPK implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int carrera_Car_Id;
 
-	@Column(unique=true, nullable=false)
-	private int per_Car_Id;
-
 	public PersonaHasCarreraModelPK() {
 	}
 	public int getPersona_Per_Id() {
@@ -35,12 +32,6 @@ public class PersonaHasCarreraModelPK implements Serializable {
 	public void setCarrera_Car_Id(int carrera_Car_Id) {
 		this.carrera_Car_Id = carrera_Car_Id;
 	}
-	public int getPer_Car_Id() {
-		return this.per_Car_Id;
-	}
-	public void setPer_Car_Id(int per_Car_Id) {
-		this.per_Car_Id = per_Car_Id;
-	}
 
 	public boolean equals(Object other) {
 		if (this == other) {
@@ -52,8 +43,7 @@ public class PersonaHasCarreraModelPK implements Serializable {
 		PersonaHasCarreraModelPK castOther = (PersonaHasCarreraModelPK)other;
 		return 
 			(this.persona_Per_Id == castOther.persona_Per_Id)
-			&& (this.carrera_Car_Id == castOther.carrera_Car_Id)
-			&& (this.per_Car_Id == castOther.per_Car_Id);
+			&& (this.carrera_Car_Id == castOther.carrera_Car_Id);
 	}
 
 	public int hashCode() {
@@ -61,7 +51,6 @@ public class PersonaHasCarreraModelPK implements Serializable {
 		int hash = 17;
 		hash = hash * prime + this.persona_Per_Id;
 		hash = hash * prime + this.carrera_Car_Id;
-		hash = hash * prime + this.per_Car_Id;
 		
 		return hash;
 	}

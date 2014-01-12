@@ -18,9 +18,6 @@ public class PersonaHasTtituloModelPK implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int TTitulo_TTi_Id;
 
-	@Column(unique=true, nullable=false)
-	private int per_TTi_Id;
-
 	public PersonaHasTtituloModelPK() {
 	}
 	public int getPersona_Per_Id() {
@@ -35,12 +32,6 @@ public class PersonaHasTtituloModelPK implements Serializable {
 	public void setTTitulo_TTi_Id(int TTitulo_TTi_Id) {
 		this.TTitulo_TTi_Id = TTitulo_TTi_Id;
 	}
-	public int getPer_TTi_Id() {
-		return this.per_TTi_Id;
-	}
-	public void setPer_TTi_Id(int per_TTi_Id) {
-		this.per_TTi_Id = per_TTi_Id;
-	}
 
 	public boolean equals(Object other) {
 		if (this == other) {
@@ -52,8 +43,7 @@ public class PersonaHasTtituloModelPK implements Serializable {
 		PersonaHasTtituloModelPK castOther = (PersonaHasTtituloModelPK)other;
 		return 
 			(this.persona_Per_Id == castOther.persona_Per_Id)
-			&& (this.TTitulo_TTi_Id == castOther.TTitulo_TTi_Id)
-			&& (this.per_TTi_Id == castOther.per_TTi_Id);
+			&& (this.TTitulo_TTi_Id == castOther.TTitulo_TTi_Id);
 	}
 
 	public int hashCode() {
@@ -61,7 +51,6 @@ public class PersonaHasTtituloModelPK implements Serializable {
 		int hash = 17;
 		hash = hash * prime + this.persona_Per_Id;
 		hash = hash * prime + this.TTitulo_TTi_Id;
-		hash = hash * prime + this.per_TTi_Id;
 		
 		return hash;
 	}

@@ -2,6 +2,9 @@ package ttiws.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.eclipse.persistence.annotations.ReturnInsert;
+
 import java.util.List;
 
 
@@ -10,11 +13,13 @@ import java.util.List;
  * 
  */
 @Entity
+@SequenceGenerator(name="seq", initialValue=1, allocationSize=100)
 @Table(name="persona")
 public class PersonaModel implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq")
 	@Column(unique=true, nullable=false)
 	private int per_Id;
 
