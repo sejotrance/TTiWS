@@ -1,11 +1,15 @@
 package ttiws.demo;
 
+import java.util.Date;
 import java.util.List;
 
 import ttiws.entidades.ResultReporteAlumnoTT;
+import ttiws.model.CalificacionModel;
 import ttiws.model.CarreraModel;
 import ttiws.model.PersonaModel;
 import ttiws.model.TtituloModel;
+import ttiws.serviciosAlumno.WSAlumnoCalificacionCrear;
+import ttiws.serviciosAlumno.WSAlumnoCalificacionListar;
 import ttiws.serviciosAlumno.WSAlumnoCarreraAgregar;
 import ttiws.serviciosCarrera.WSCarreraConsultar;
 import ttiws.serviciosCarrera.WSCarreraListar;
@@ -58,10 +62,20 @@ public class WSClassTester {
 		
 		
 //		WSAlumnoCarreraAgregar.agregarCarrera(72, 1);
+//		WSAlumnoCalificacionCrear.crearCalificacion(1, "", new Date(), "30", "Descripcion de prueba", false);
+//		List<CalificacionModel> listaCalificacion = WSAlumnoCalificacionListar.listarCalificaciones(14);
+//		for (CalificacionModel calificacion : listaCalificacion) {
+//			System.out.println(calificacion.getCal_Id() + ":" + calificacion.getCal_Calificacion());
+//		}
+//		
+//		List<ResultReporteAlumnoTT> resultadoReporte = WSReporteAlumnoTT.listarReporteAlumnoPorProfesor(3);
+//		for (ResultReporteAlumnoTT resultReporteAlumnoTT : resultadoReporte) {
+//			System.out.println(resultReporteAlumnoTT.getPer_Nombre() + " " + resultReporteAlumnoTT.getPer_Id());
+//		}
 		
-		List<ResultReporteAlumnoTT> resultadoReporte = WSReporteAlumnoTT.listarReporteAlumnoPorProfesor(3);
+		List<ResultReporteAlumnoTT> resultadoReporte = WSReporteAlumnoTT.listarReporteAlumnoTT(1);
 		for (ResultReporteAlumnoTT resultReporteAlumnoTT : resultadoReporte) {
-			System.out.println(resultReporteAlumnoTT.getPer_Nombre() + " " + resultReporteAlumnoTT.getPer_Id());
+			System.out.println(resultReporteAlumnoTT.getPer_Nombre() + " " + resultReporteAlumnoTT.getPer_Id() + " " + resultReporteAlumnoTT.getNombreProfesor());
 		}
 	}
 }

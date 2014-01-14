@@ -43,9 +43,16 @@ public class WSReporteAlumnoTT {
 					TTi_Tit1 =  ttitulosAlumno.get(largoTitulos - 1).getTTi_Tit1();
 					TTi_Tit2 =  ttitulosAlumno.get(largoTitulos - 1).getTTi_Tit2();
 				}
+				//PROFESOR GUIA
+				String nombreProfesor = "";
+				List<PersonaModel> profesGuia = alumno.getPersonas1();
+				int largoProfes = profesGuia.size(); 
+				if(largoProfes > 0){
+					PersonaModel profesor = profesGuia.get(largoProfes -1);
+					nombreProfesor = (profesor.getPer_Nombre() + " " + profesor.getPer_Apellido_Paterno() + " " + profesor.getPer_Apellido_Materno());
+				}
 				
-				
-				listaResultado.add(new ResultReporteAlumnoTT(per_Id, per_Run, per_Nombre, Per_Apellido_Paterno, TTitulo_TTi_Id, TTi_Nombre, Car_Id, Car_Nombre, TTi_Tit1, TTi_Tit2));
+				listaResultado.add(new ResultReporteAlumnoTT(per_Id, per_Run, per_Nombre, Per_Apellido_Paterno, TTitulo_TTi_Id, TTi_Nombre, Car_Id, Car_Nombre, TTi_Tit1, TTi_Tit2, nombreProfesor));
 			//}
 		}
 		System.out.println("[WS-" + "WSReporteAlumnoTT.listarReporteAlumnoTT" + "]: " + new Timestamp(System.currentTimeMillis()) + " Ha finalizado exitosamente" );
@@ -82,9 +89,17 @@ public class WSReporteAlumnoTT {
 				Car_Id = carrerasAlumno.get(largoCarreras -1).getCar_Id();
 				Car_Nombre = carrerasAlumno.get(largoCarreras -1).getCar_Nombre();
 			}
+			//PROFESOR GUIA
+			String nombreProfesor = "";
+			List<PersonaModel> profesGuia = alumno.getPersonas2();
+			int largoProfes = profesGuia.size(); 
+			if(largoProfes > 0){
+				PersonaModel profesor = profesGuia.get(largoProfes -1);
+				nombreProfesor = (profesor.getPer_Nombre() + " " + profesor.getPer_Apellido_Paterno() + " " + profesor.getPer_Apellido_Materno());
+			}
 				
 				
-			listaResultado.add(new ResultReporteAlumnoTT(per_Id, per_Run, per_Nombre, Per_Apellido_Paterno, TTitulo_TTi_Id, TTi_Nombre, Car_Id, Car_Nombre, TTi_Tit1, TTi_Tit2));
+			listaResultado.add(new ResultReporteAlumnoTT(per_Id, per_Run, per_Nombre, Per_Apellido_Paterno, TTitulo_TTi_Id, TTi_Nombre, Car_Id, Car_Nombre, TTi_Tit1, TTi_Tit2, nombreProfesor));
 
 		}
 		System.out.println("[WS-" + "WSReporteAlumnoTT.listarReporteAlumnoTT" + "]: " + new Timestamp(System.currentTimeMillis()) + " Ha finalizado exitosamente" );

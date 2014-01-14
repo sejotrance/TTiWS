@@ -35,6 +35,8 @@ public class WSAlumnoCarreraAgregar {
 			return new StatusResult(1, "Debe ingresar idCarrera");
 		}
 		//COMIENZA TRANSACCION
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	    EntityManager em = factory.createEntityManager();
 		try{
 			PersonaHasCarreraModel personaHC= new PersonaHasCarreraModel();
 			PersonaHasCarreraModelPK pk = new PersonaHasCarreraModelPK();
@@ -42,15 +44,14 @@ public class WSAlumnoCarreraAgregar {
 			pk.setCarrera_Car_Id(carrera.getCar_Id());
 			personaHC.setId(pk);
 			personaHC.setPer_Car_Fecha_Mod(new Date());
-			factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		    EntityManager em = factory.createEntityManager();
 		    em.getTransaction().begin();
 		    em.persist(personaHC);
 		    em.getTransaction().commit();
 		    em.close();
 	    } catch (Exception e) {
 	    	System.out.println("[WS-" + "WSAlumnoCarreraAgregar.agregarCarrera" + "]: " + new Timestamp(System.currentTimeMillis()) + e.getMessage());
-			return new StatusResult(1, e.getMessage());
+			em.getTransaction().rollback();
+	    	return new StatusResult(1, e.getMessage());
 		}
 		System.out.println("[WS-" + "WSAlumnoCarreraAgregar.agregarCarrera" + "]: " + new Timestamp(System.currentTimeMillis()) + " Ha finalizado exitosamente");
 		   return new StatusResult(0, "Servicio finalizado exitosamente");

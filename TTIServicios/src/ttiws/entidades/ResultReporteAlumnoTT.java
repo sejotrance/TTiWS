@@ -11,6 +11,7 @@ public class ResultReporteAlumnoTT {
 	private String  Car_Nombre;
 	private boolean TTi_Tit1;
 	private boolean TTi_Tit2;
+	private String nombreProfesor;
 	
 	public ResultReporteAlumnoTT(
 			int per_Id, 
@@ -22,7 +23,8 @@ public class ResultReporteAlumnoTT {
 			int Car_Id, 
 			String  Car_Nombre,
 			boolean TTi_Tit1,
-			boolean TTi_Tit2) {
+			boolean TTi_Tit2,
+			String nombreProfesor) {
 		
 		this.per_Id = per_Id;
 		this.per_Run = per_Run;
@@ -34,6 +36,7 @@ public class ResultReporteAlumnoTT {
 		this.Car_Nombre = Car_Nombre;
 		this.TTi_Tit1 = TTi_Tit1;
 		this.TTi_Tit2 = TTi_Tit2;
+		this.nombreProfesor = nombreProfesor;
 	}
 	
 	public int getPer_Id() {
@@ -99,6 +102,14 @@ public class ResultReporteAlumnoTT {
 
 	public void setTTi_Tit2(boolean tTi_Tit2) {
 		TTi_Tit2 = tTi_Tit2;
+	}
+
+	public String getNombreProfesor() {
+		return nombreProfesor;
+	}
+
+	public void setNombreProfesor(String nombreProfesor) {
+		this.nombreProfesor = nombreProfesor;
 	}
 	
 }
