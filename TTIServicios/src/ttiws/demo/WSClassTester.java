@@ -2,6 +2,7 @@ package ttiws.demo;
 
 import java.util.List;
 
+import ttiws.entidades.ResultReporteAlumnoTT;
 import ttiws.model.CarreraModel;
 import ttiws.model.PersonaModel;
 import ttiws.model.TtituloModel;
@@ -11,6 +12,7 @@ import ttiws.serviciosCarrera.WSCarreraListar;
 import ttiws.serviciosPersona.WSPersonaConsultar;
 import ttiws.serviciosPersona.WSPersonaCrear;
 import ttiws.serviciosPersona.WSPersonaListar;
+import ttiws.serviciosReportes.WSReporteAlumnoTT;
 
 public class WSClassTester {
 
@@ -27,18 +29,18 @@ public class WSClassTester {
 //			System.out.println(carrera.getCar_Id()+":"+carrera.getCar_Codigo()+":"+carrera.getCar_Nombre());
 //		}
 		
-		WSPersonaConsultar ws = new WSPersonaConsultar();
-//		PersonaModel persona = ws.consultarPorRun("166638275");
-		PersonaModel persona = WSPersonaConsultar.consultarPorId(14);
-		List<CarreraModel> carrerasPersona = persona.getCarreras();
-		List<TtituloModel> ttituloPersona = persona.getTtitulos();
-			System.out.println(persona.getPer_Id()+":"+persona.getPer_Nombre()+":" + persona.getRols().size() +":"+persona.getPersonaHasRols().size());
-		for (CarreraModel carreraModel : carrerasPersona) {
-			System.out.println(carreraModel.getCar_Codigo() + ":" + carreraModel.getCar_Nombre());
-		}
-		for (TtituloModel ttituloModel : ttituloPersona) {
-			System.out.println("TTITULO 1 = " + ttituloModel.getTTi_Tit1() + ":" + "TTITULO 2 = " + ttituloModel.getTTi_Tit2());
-		}
+//		WSPersonaConsultar ws = new WSPersonaConsultar();
+////		PersonaModel persona = ws.consultarPorRun("166638275");
+//		PersonaModel persona = WSPersonaConsultar.consultarPorId(14);
+//		List<CarreraModel> carrerasPersona = persona.getCarreras();
+//		List<TtituloModel> ttituloPersona = persona.getTtitulos();
+//			System.out.println(persona.getPer_Id()+":"+persona.getPer_Nombre()+":" + persona.getRols().size() +":"+persona.getPersonaHasRols().size());
+//		for (CarreraModel carreraModel : carrerasPersona) {
+//			System.out.println(carreraModel.getCar_Codigo() + ":" + carreraModel.getCar_Nombre());
+//		}
+//		for (TtituloModel ttituloModel : ttituloPersona) {
+//			System.out.println("TTITULO 1 = " + ttituloModel.getTTi_Tit1() + ":" + "TTITULO 2 = " + ttituloModel.getTTi_Tit2());
+//		}
 //		WSPersonaCrear ws = new WSPersonaCrear();
 //		String codTipoPersona = "6";
 //		String password = "1234";
@@ -56,5 +58,10 @@ public class WSClassTester {
 		
 		
 //		WSAlumnoCarreraAgregar.agregarCarrera(72, 1);
+		
+		List<ResultReporteAlumnoTT> resultadoReporte = WSReporteAlumnoTT.listarReporteAlumnoPorProfesor(3);
+		for (ResultReporteAlumnoTT resultReporteAlumnoTT : resultadoReporte) {
+			System.out.println(resultReporteAlumnoTT.getPer_Nombre() + " " + resultReporteAlumnoTT.getPer_Id());
+		}
 	}
 }
